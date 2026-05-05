@@ -1,3 +1,4 @@
+
 plugins {
     id("java")
     application
@@ -5,6 +6,8 @@ plugins {
     // id("org.sonarqube") version "7.1.0.6387"
     checkstyle
 }
+
+
 
 application {
     mainClass = "hexlet.code.App"
@@ -19,10 +22,15 @@ repositories {
 }
 
 dependencies {
-
-        implementation("org.apache.commons:commons-lang3:3.20.0")
-
+    implementation("org.apache.commons:commons-lang3:3.20.0")
+    implementation("info.picocli:picocli:4.7.7")
+    annotationProcessor("info.picocli:picocli-codegen:4.7.7")
 }
+
+tasks.compileJava {
+    options.compilerArgs.add("-Aproject=${project.group}/${project.name}")
+}
+
 
 tasks.test {
     useJUnitPlatform()
