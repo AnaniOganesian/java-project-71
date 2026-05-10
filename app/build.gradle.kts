@@ -5,6 +5,7 @@ plugins {
     id("com.github.ben-manes.versions") version "0.53.0"
     // id("org.sonarqube") version "7.1.0.6387"
     checkstyle
+
 }
 
 
@@ -25,6 +26,8 @@ dependencies {
     implementation("org.apache.commons:commons-lang3:3.20.0")
     implementation("info.picocli:picocli:4.7.7")
     annotationProcessor("info.picocli:picocli-codegen:4.7.7")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.15.2")
+
 }
 
 tasks.compileJava {
