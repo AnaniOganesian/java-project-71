@@ -44,9 +44,12 @@ public class App implements Runnable {
             Map<String, Object> config1 = readAndParseJson(filepath1);
             Map<String, Object> config2 = readAndParseJson(filepath2);
 
-            System.out.println("File 1: " + config1);
+            String diff = Differ.generate(config1, config2);
+            System.out.println(diff);
+
+            /* System.out.println("File 1: " + config1);
             System.out.println("File 2: " + config2);
-            System.out.println("Format: " + format);
+            System.out.println("Format: " + format); */
 
             // Здесь будет логика сравнения файлов
 
