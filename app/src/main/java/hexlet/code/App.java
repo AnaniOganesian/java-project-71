@@ -7,6 +7,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.io.IOException;
 
 @Command(
         name = "gendiff",
@@ -47,14 +48,11 @@ public class App implements Runnable {
             String diff = Differ.generate(config1, config2);
             System.out.println(diff);
 
-            /* System.out.println("File 1: " + config1);
-            System.out.println("File 2: " + config2);
-            System.out.println("Format: " + format); */
 
             // Здесь будет логика сравнения файлов
 
         } catch (Exception e) {
-            System.err.println("Error: " + e.getMessage());
+            System.out.println("Error: " + e.getMessage());
         }
     }
 
@@ -65,7 +63,7 @@ public class App implements Runnable {
     }
 
     // Парсит JSON строку в Map
-    private Map<String, Object> parse(String content) throws Exception {
+    private Map<String, Object> parse(String content) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(content, Map.class);
     }

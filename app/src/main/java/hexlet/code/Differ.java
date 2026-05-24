@@ -1,5 +1,8 @@
 package hexlet.code;
-import java.util.*;
+import java.util.Map;
+import java.util.Set;
+import java.util.Objects;
+import java.util.TreeSet;
 
 public class Differ {
 
@@ -17,17 +20,14 @@ public class Differ {
             // Проверяем, если нет в 1, но есть во 2 - ставим плюсик
             if (!config1.containsKey(key) && config2.containsKey(key)) {
                 result.append(String.format("  + %s: %s\n", key, formatValue(value2)));
-            }
-            // Проверяем, если нет в 2, но есть во 1 - ставим минус
-            else if (config1.containsKey(key) && !config2.containsKey(key)) {
+            } else if (config1.containsKey(key) && !config2.containsKey(key)) {
+                // Проверяем, если нет в 2, но есть во 1 - ставим минус
                 result.append(String.format("  - %s: %s\n", key, formatValue(value1)));
-            }
-            // Проверяем равные данные, показываем без знаков
-            else if (Objects.equals(value1, value2)) {
+            } else if (Objects.equals(value1, value2)) {
+                // Проверяем равные данные, показываем без знаков
                 result.append(String.format("    %s: %s\n", key, formatValue(value1)));
-            }
-            // Если значение изменилось, то показываем оба варианта.
-            else {
+            } else {
+                // Если значение изменилось, то показываем оба варианта.
                 result.append(String.format("  - %s: %s\n", key, formatValue(value1)));
                 result.append(String.format("  + %s: %s\n", key, formatValue(value2)));
             }
@@ -36,10 +36,7 @@ public class Differ {
         result.append("}");
         return result.toString();
 
-        }
-
-
-
+    }
 
     private static String formatValue(Object value) {
         if (value == null) {
