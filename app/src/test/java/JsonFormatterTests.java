@@ -1,10 +1,10 @@
-package hexlet.code;
-
 import java.util.HashMap;
 import java.util.Map;
+
+import hexlet.code.Differ;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-import static org.junit.jupiter.api.Assertions.assertFalse;
+
 
 class JsonFormatterTest {
 
