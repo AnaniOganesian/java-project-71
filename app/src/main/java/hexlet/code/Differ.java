@@ -8,12 +8,13 @@ import java.util.ArrayList;
 
 public class Differ {
 
-    public static String generate(Map<String, Object> config1, Map<String, Object> config2) {
-        // Генерируем внутреннее представление (список DiffNode)
+    public static String generate(Map<String, Object> config1, Map<String, Object> config2, String format) {
         List<DiffNode> diffNodes = buildDiff(config1, config2);
+        return Formatter.format(diffNodes, format);
+    }
 
-        // Передаём в форматер
-        return Formatter.format(diffNodes);
+    public static String generate(Map<String, Object> config1, Map<String, Object> config2) {
+        return generate(config1, config2, "stylish");
     }
 
     private static List<DiffNode> buildDiff(Map<String, Object> config1, Map<String, Object> config2) {

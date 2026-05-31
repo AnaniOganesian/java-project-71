@@ -8,3 +8,7 @@
 1. Запись сравнения файлов (Этап 6): https://asciinema.org/a/W2PMiPpgI3yiRQjx
 2. Скрин сравнения файлов (Этап 8):
 ![alt text](image.png)
+3. Скрин сравнения файлов (этап 9): 
+![alt text](image-1.png)
+4. Скрин сравнения файлов (этап 10, формат plain):
+![alt text](image-2.png)

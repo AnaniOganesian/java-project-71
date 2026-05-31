@@ -11,7 +11,7 @@ node_modules/
 /db/*.sqlite3
 
 # Игнорировать все .txt файлы в каталоге doc/ на всех уровнях вложенности
-doc/**/*.txt
+doc/**/*.{txt,png}
 
 .gradle
 build/
