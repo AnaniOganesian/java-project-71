@@ -20,7 +20,9 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="app.main" options="-Aproject=hexlet.code/app" />
+      <module name="app" options="-Xlint:unchecked -Xlint:deprecation" />
+      <module name="app.main" options="-Xlint:unchecked -Xlint:deprecation -Aproject=hexlet.code/app" />
+      <module name="app.test" options="-Xlint:unchecked -Xlint:deprecation" />
     </option>
   </component>
 </project>

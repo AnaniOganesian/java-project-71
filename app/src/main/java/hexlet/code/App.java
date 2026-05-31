@@ -3,11 +3,7 @@ package hexlet.code;
 import hexlet.code.CommandLine.Command;
 import hexlet.code.CommandLine.Option;
 import hexlet.code.CommandLine.Parameters;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.Map;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import java.io.IOException;
 
 @Command(
         name = "gendiff",
@@ -41,36 +37,29 @@ public class App implements Runnable {
     @Override
     public void run() {
         try {
-            // Читаем и парсим оба файла
-            Map<String, Object> config1 = readAndParseJson(filepath1);
-            Map<String, Object> config2 = readAndParseJson(filepath2);
+            // Проверяем что оба файла передали
+            if (filepath1 == null || filepath2 == null) {
+                System.out.println("Error: Please provide two file paths");
+                return;
+            }
 
+            // Используем Parser для чтения файлов
+            Map<String, Object> config1 = Parser.parse(filepath1);
+            Map<String, Object> config2 = Parser.parse(filepath2);
+
+            // Генерируем diff
             String diff = Differ.generate(config1, config2);
+
+            // Выводим результат
             System.out.println(diff);
-
-
-            // Здесь будет логика сравнения файлов
 
         } catch (Exception e) {
             System.out.println("Error: " + e.getMessage());
         }
     }
 
-    // Читает файл и парсит JSON содержимое
-    private Map<String, Object> readAndParseJson(String filePath) throws Exception {
-        String content = new String(Files.readAllBytes(Paths.get(filePath)));
-        return parse(content);
-    }
-
-    // Парсит JSON строку в Map
-    private Map<String, Object> parse(String content) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.readValue(content, Map.class);
-    }
-
     public static void main(String[] args) {
         int exitCode = new CommandLine(new App()).execute(args);
         System.exit(exitCode);
-
     }
 }

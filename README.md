@@ -6,3 +6,5 @@
 
 Записи аскинем:
 1. Запись сравнения файлов (Этап 6): https://asciinema.org/a/W2PMiPpgI3yiRQjx
+2. Скрин сравнения файлов (Этап 8):
+![alt text](image.png)

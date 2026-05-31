@@ -3,38 +3,47 @@ import java.util.Map;
 import java.util.Set;
 import java.util.Objects;
 import java.util.TreeSet;
+import java.util.List;
+import java.util.ArrayList;
 
 public class Differ {
 
     public static String generate(Map<String, Object> config1, Map<String, Object> config2) {
+        // Генерируем внутреннее представление (список DiffNode)
+        List<DiffNode> diffNodes = buildDiff(config1, config2);
+
+        // Передаём в форматер
+        return Formatter.format(diffNodes);
+    }
+
+    private static List<DiffNode> buildDiff(Map<String, Object> config1, Map<String, Object> config2) {
+
+        List<DiffNode> result = new ArrayList<>();
+
         Set<String> allKeys = new TreeSet<>();
         allKeys.addAll(config1.keySet());
         allKeys.addAll(config2.keySet());
-
-        StringBuilder result = new StringBuilder("{\n");
 
         for (var key : allKeys) {
             var value1 = config1.get(key);
             var value2 = config2.get(key);
 
-            // Проверяем, если нет в 1, но есть во 2 - ставим плюсик
-            if (!config1.containsKey(key) && config2.containsKey(key)) {
-                result.append(String.format("  + %s: %s\n", key, formatValue(value2)));
-            } else if (config1.containsKey(key) && !config2.containsKey(key)) {
-                // Проверяем, если нет в 2, но есть во 1 - ставим минус
-                result.append(String.format("  - %s: %s\n", key, formatValue(value1)));
+            if (!config1.containsKey(key)) {
+                // Ключ только во втором файле
+                result.add(new DiffNode(key, null, value2, DiffNode.Status.ADDED));
+            } else if (!config2.containsKey(key)) {
+                // Ключ только в первом файле
+                result.add(new DiffNode(key, value1, null, DiffNode.Status.REMOVED));
             } else if (Objects.equals(value1, value2)) {
-                // Проверяем равные данные, показываем без знаков
-                result.append(String.format("    %s: %s\n", key, formatValue(value1)));
+                // Значения одинаковые
+                result.add(new DiffNode(key, value1, value2, DiffNode.Status.UNCHANGED));
             } else {
-                // Если значение изменилось, то показываем оба варианта.
-                result.append(String.format("  - %s: %s\n", key, formatValue(value1)));
-                result.append(String.format("  + %s: %s\n", key, formatValue(value2)));
+                // Значения разные
+                result.add(new DiffNode(key, value1, value2, DiffNode.Status.CHANGED));
             }
         }
 
-        result.append("}");
-        return result.toString();
+        return result;
 
     }
 
