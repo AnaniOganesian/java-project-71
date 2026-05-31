@@ -12,3 +12,5 @@
 ![alt text](image-1.png)
 4. Скрин сравнения файлов (этап 10, формат plain):
 ![alt text](image-2.png)
+5. Скрин сравнения файлов (этап 11, запись в файл json):
+![alt text](image-3.png)

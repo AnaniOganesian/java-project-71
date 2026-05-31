@@ -1,0 +1,37 @@
+package hexlet.code.formatters;
+
+import hexlet.code.DiffNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+public class JsonFormatter {
+
+    private static final ObjectMapper mapper = new ObjectMapper();
+
+    public static String format(List<DiffNode> diffNodes) {
+        try {
+            List<Map<String, Object>> result = new java.util.ArrayList<>();
+
+            for (var node : diffNodes) {
+                Map<String, Object> nodeMap = new LinkedHashMap<>();
+                nodeMap.put("key", node.getKey());
+                nodeMap.put("status", node.getStatus().toString().toLowerCase());
+
+                if (node.getValue1() != null) {
+                    nodeMap.put("oldValue", node.getValue1());
+                }
+                if (node.getValue2() != null) {
+                    nodeMap.put("newValue", node.getValue2());
+                }
+
+                result.add(nodeMap);
+            }
+
+            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+        } catch (Exception e) {
+            throw new RuntimeException("Error formatting to JSON", e);
+        }
+    }
+}

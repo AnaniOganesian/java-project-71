@@ -29,7 +29,7 @@ public class App implements Runnable {
 
     @Option(
             names = {"-f", "--format"},
-            description = "output format (json, plain, stylish)",
+            description = "output format (stylish, plain, json)",
             defaultValue = "stylish"
     )
     private String format;
