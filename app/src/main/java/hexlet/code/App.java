@@ -47,7 +47,8 @@ public class App implements Runnable {
             Map<String, Object> config1 = Parser.parse(filepath1);
             Map<String, Object> config2 = Parser.parse(filepath2);
 
-            // Генерируем diff, по умолчанию - Stylish. Если добавить тип форматтера третьим параметром, то будет работать иной тип
+            // Генерируем diff, по умолчанию - Stylish.
+            // Если добавить тип форматтера третьим параметром, то будет работать иной тип
             String diff = Differ.generate(config1, config2, "plain");
 
             // Выводим результат

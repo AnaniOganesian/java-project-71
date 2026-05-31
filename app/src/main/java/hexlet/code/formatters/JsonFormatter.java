@@ -8,7 +8,7 @@ import java.util.Map;
 
 public class JsonFormatter {
 
-    private static final ObjectMapper mapper = new ObjectMapper();
+    private static final ObjectMapper MAPPER = new ObjectMapper();
 
     public static String format(List<DiffNode> diffNodes) {
         try {
@@ -29,7 +29,7 @@ public class JsonFormatter {
                 result.add(nodeMap);
             }
 
-            return mapper.writerWithDefaultPrettyPrinter().writeValueAsString(result);
+            return MAPPER.writerWithDefaultPrettyPrinter().writeValueAsString(result);
         } catch (Exception e) {
             throw new RuntimeException("Error formatting to JSON", e);
         }
