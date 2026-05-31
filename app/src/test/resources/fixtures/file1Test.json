@@ -1,0 +1,6 @@
+{
+  "host": "hexlet.io",
+  "timeout": 50,
+  "proxy": false,
+  "setting1": "value 1"
+}

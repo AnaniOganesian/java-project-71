@@ -1,0 +1,6 @@
+{
+  "timeout": 20,
+  "proxy": true,
+  "setting1": "value 1",
+  "setting2": 300
+}
