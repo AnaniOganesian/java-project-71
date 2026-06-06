@@ -50,9 +50,6 @@ public class StylishFormatter {
         if (value == null) {
             return "null";
         }
-        if (value instanceof String) {
-            return "\"" + value + "\"";
-        }
         return value.toString();
     }
 }
