@@ -15,6 +15,7 @@ public class App implements Runnable {
 
     @Parameters(
             index = "0",
+            paramLabel = "filepath1",
             description = "path to first file",
             arity = "0..1"
     )
@@ -22,6 +23,7 @@ public class App implements Runnable {
 
     @Parameters(
             index = "1",
+            paramLabel = "filepath2",
             description = "path to second file",
             arity = "0..1"
     )
@@ -29,6 +31,7 @@ public class App implements Runnable {
 
     @Option(
             names = {"-f", "--format"},
+            paramLabel = "format",
             description = "output format (stylish, plain, json)",
             defaultValue = "stylish"
     )

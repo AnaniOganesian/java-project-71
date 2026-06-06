@@ -1,4 +1,5 @@
 package hexlet.code;
+import java.io.IOException;
 import java.util.Map;
 import java.util.Set;
 import java.util.Objects;
@@ -7,7 +8,15 @@ import java.util.List;
 import java.util.ArrayList;
 
 public class Differ {
+    public static String generate(String filePath1, String filePath2) throws IOException {
+        return generate(filePath1, filePath2, "stylish");
+    }
 
+    public static String generate(String filePath1, String filePath2, String format) throws IOException {
+        Map<String, Object> config1 = Parser.parse(filePath1);
+        Map<String, Object> config2 = Parser.parse(filePath2);
+        return generate(config1, config2, format);
+    }
     public static String generate(Map<String, Object> config1, Map<String, Object> config2, String format) {
         List<DiffNode> diffNodes = buildDiff(config1, config2);
         return Formatter.format(diffNodes, format);
