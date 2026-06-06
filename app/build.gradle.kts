@@ -134,7 +134,8 @@ sonar {
         property("sonar.tests", "src/test")
         property("sonar.coverage.jacoco.xmlReportPaths",
             "${layout.buildDirectory}/reports/jacoco/test/jacocoTestReport.xml")
-        property("sonar.java.binaries", "${layout.buildDirectory}/classes/java/main")
+        property("sonar.java.binaries",
+            layout.buildDirectory.dir("classes/java/main").get().asFile.absolutePath)
     }
 }
 
