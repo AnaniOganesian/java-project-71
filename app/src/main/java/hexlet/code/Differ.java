@@ -1,73 +1,50 @@
 package hexlet.code;
+
+import static hexlet.code.BuildDiff.buildDiff;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.Map;
-import java.util.Set;
-import java.util.Objects;
-import java.util.TreeSet;
 import java.util.List;
-import java.util.ArrayList;
+
+
 
 public class Differ {
-    public static String generate(String filePath1, String filePath2) throws IOException {
+
+    public static String generate(String filePath1, String filePath2) throws Exception {
         return generate(filePath1, filePath2, "stylish");
     }
 
-    public static String generate(String filePath1, String filePath2, String format) throws IOException {
-        Map<String, Object> config1 = Parser.parse(filePath1);
-        Map<String, Object> config2 = Parser.parse(filePath2);
-        return generate(config1, config2, format);
-    }
-    public static String generate(Map<String, Object> config1, Map<String, Object> config2, String format) {
-        List<DiffNode> diffNodes = buildDiff(config1, config2);
-        return Formatter.format(diffNodes, format);
-    }
+    public static String generate(String filePath1, String filePath2, String format) throws Exception {
+        var formate1 = getFormat(filePath1);
+        var formate2 = getFormat(filePath2);
 
-    public static String generate(Map<String, Object> config1, Map<String, Object> config2) {
-        return generate(config1, config2, "stylish");
-    }
+        String contentOfFilepath1 = Files.readString(Paths.get(filePath1));
+        String contentOfFilepath2 = Files.readString(Paths.get(filePath2));
 
-    private static List<DiffNode> buildDiff(Map<String, Object> config1, Map<String, Object> config2) {
-
-        List<DiffNode> result = new ArrayList<>();
-
-        Set<String> allKeys = new TreeSet<>();
-        allKeys.addAll(config1.keySet());
-        allKeys.addAll(config2.keySet());
-
-        for (var key : allKeys) {
-            var value1 = config1.get(key);
-            var value2 = config2.get(key);
-
-            if (!config1.containsKey(key)) {
-                // Ключ только во втором файле
-                result.add(new DiffNode(key, null, value2, DiffNode.Status.ADDED));
-            } else if (!config2.containsKey(key)) {
-                // Ключ только в первом файле
-                result.add(new DiffNode(key, value1, null, DiffNode.Status.REMOVED));
-            } else if (Objects.equals(value1, value2)) {
-                // Значения одинаковые
-                result.add(new DiffNode(key, value1, value2, DiffNode.Status.UNCHANGED));
-            } else {
-                // Значения разные
-                result.add(new DiffNode(key, value1, value2, DiffNode.Status.CHANGED));
-            }
+        if (formate1.equals("json") && formate2.equals("json")) {
+            Map<String, Object> config1 = Parser.parseJson(contentOfFilepath1);
+            Map<String, Object> config2 = Parser.parseJson(contentOfFilepath2);
+            List<DiffNode> diffNodes = buildDiff(config1, config2);
+            return Formatter.format(diffNodes, format);
+        } else if (formate1.equals("yaml") && formate2.equals("yaml")) {
+            Map<String, Object> config1 = Parser.parseYaml(contentOfFilepath1);
+            Map<String, Object> config2 = Parser.parseYaml(contentOfFilepath2);
+            List<DiffNode> diffNodes = buildDiff(config1, config2);
+            return Formatter.format(diffNodes, format);
+        } else {
+            return "Wrong formates";
         }
-
-        return result;
-
     }
 
-    private static String formatValue(Object value) {
-        if (value == null) {
-            return "null";
+    private static String getFormat(String sourcePath) throws IOException {
+        if (sourcePath.endsWith(".json")) {
+            return "json";
+        } else if (sourcePath.endsWith(".yaml") || sourcePath.endsWith(".yml")) {
+            return "yaml";
+        } else {
+            throw new IOException("Unsupported source extension: " + sourcePath);
         }
-        if (value instanceof String) {
-            return value.toString();
-        }
-        if (value instanceof Boolean || value instanceof Number) {
-            return value.toString();
-        }
-        return value.toString();
     }
 
 }

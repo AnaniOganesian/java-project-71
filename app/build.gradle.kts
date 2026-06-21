@@ -32,7 +32,7 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-params:5.9.3")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.9.3")
 
-    // ===== JUnit Platform (КРИТИЧНО!) =====
+    // ===== JUnit Platform =====
     testImplementation("org.junit.platform:junit-platform-launcher:1.9.3")
 
     // AssertJ для удобных assertions

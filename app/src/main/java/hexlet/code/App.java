@@ -1,11 +1,11 @@
 package hexlet.code;
 
-import hexlet.code.CommandLine.Command;
-import hexlet.code.CommandLine.Option;
-import hexlet.code.CommandLine.Parameters;
-import java.util.Map;
+import picocli.CommandLine;
+import picocli.CommandLine.Parameters;
+import picocli.CommandLine.Option;
 
-@Command(
+
+@CommandLine.Command(
         name = "gendiff",
         description = "Compares two configuration files and shows a difference.",
         mixinStandardHelpOptions = true,
@@ -46,13 +46,9 @@ public class App implements Runnable {
                 return;
             }
 
-            // Используем Parser для чтения файлов
-            Map<String, Object> config1 = Parser.parse(filepath1);
-            Map<String, Object> config2 = Parser.parse(filepath2);
-
             // Генерируем diff, по умолчанию - Stylish.
             // Если добавить тип форматтера третьим параметром, то будет работать иной тип
-            String diff = Differ.generate(config1, config2, format);
+            String diff = Differ.generate(filepath1, filepath2, format);
 
             // Выводим результат
             System.out.println(diff);

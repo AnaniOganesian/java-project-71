@@ -10,26 +10,29 @@ class DifferTest {
 
     private String getFixturePath(String filename) {
         return getClass().getClassLoader()
-                .getResource("fixtures/" + filename)
+                .getResource(filename)
                 .getPath();
     }
 
     @Test
-    @DisplayName("Сравнение JSON файлов - stylish по умолчанию")
-    void testJsonStylishDefault() throws Exception {
+    @DisplayName("JSON → stylish (default)")
+    void testJsonToStylishDefault() throws Exception {
         String file1 = getFixturePath("file1Test.json");
         String file2 = getFixturePath("file2Test.json");
 
+        // Без указания формата - должен использоваться stylish
         String result = Differ.generate(file1, file2);
 
         assertThat(result)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .contains("  ")  // stylish использует пробелы
+                .doesNotStartWith("[");  // не JSON формат
     }
 
     @Test
-    @DisplayName("Сравнение JSON файлов - stylish явно")
-    void testJsonStylishExplicit() throws Exception {
+    @DisplayName("JSON → stylish (explicit)")
+    void testJsonToStylishExplicit() throws Exception {
         String file1 = getFixturePath("file1Test.json");
         String file2 = getFixturePath("file2Test.json");
 
@@ -37,12 +40,14 @@ class DifferTest {
 
         assertThat(result)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .contains("  ")  // stylish использует пробелы
+                .doesNotStartWith("[");
     }
 
     @Test
-    @DisplayName("Сравнение JSON файлов - plain формат")
-    void testJsonPlain() throws Exception {
+    @DisplayName("JSON → plain")
+    void testJsonToPlain() throws Exception {
         String file1 = getFixturePath("file1Test.json");
         String file2 = getFixturePath("file2Test.json");
 
@@ -50,12 +55,14 @@ class DifferTest {
 
         assertThat(result)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .doesNotStartWith("[")  // не JSON
+                .doesNotContain("  ");  // plain не использует отступы
     }
 
     @Test
-    @DisplayName("Сравнение JSON файлов - json формат")
-    void testJsonJsonFormat() throws Exception {
+    @DisplayName("JSON → json")
+    void testJsonToJsonFormat() throws Exception {
         String file1 = getFixturePath("file1Test.json");
         String file2 = getFixturePath("file2Test.json");
 
@@ -65,25 +72,31 @@ class DifferTest {
                 .isNotNull()
                 .isNotEmpty()
                 .startsWith("[")
-                .endsWith("]");
+                .endsWith("]")
+                .contains("\"key\"");  // JSON формат
     }
 
+    // ==================== YAML ВХОДНЫЕ ФАЙЛЫ ====================
+
     @Test
-    @DisplayName("Сравнение YAML файлов - stylish по умолчанию")
-    void testYamlStylishDefault() throws Exception {
+    @DisplayName("YAML → stylish (default)")
+    void testYamlToStylishDefault() throws Exception {
         String file1 = getFixturePath("file1Test.yml");
         String file2 = getFixturePath("file2Test.yml");
 
+        // Без указания формата - должен использоваться stylish
         String result = Differ.generate(file1, file2);
 
         assertThat(result)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .contains("  ")  // stylish использует пробелы
+                .doesNotStartWith("[");  // не JSON формат
     }
 
     @Test
-    @DisplayName("Сравнение YAML файлов - plain формат")
-    void testYamlPlain() throws Exception {
+    @DisplayName("YAML → plain")
+    void testYamlToPlain() throws Exception {
         String file1 = getFixturePath("file1Test.yml");
         String file2 = getFixturePath("file2Test.yml");
 
@@ -91,12 +104,14 @@ class DifferTest {
 
         assertThat(result)
                 .isNotNull()
-                .isNotEmpty();
+                .isNotEmpty()
+                .doesNotStartWith("[")  // не JSON
+                .doesNotContain("  ");  // plain не использует отступы
     }
 
     @Test
-    @DisplayName("Сравнение YAML файлов - json формат")
-    void testYamlJsonFormat() throws Exception {
+    @DisplayName("YAML → json")
+    void testYamlToJsonFormat() throws Exception {
         String file1 = getFixturePath("file1Test.yml");
         String file2 = getFixturePath("file2Test.yml");
 
@@ -106,6 +121,7 @@ class DifferTest {
                 .isNotNull()
                 .isNotEmpty()
                 .startsWith("[")
-                .endsWith("]");
+                .endsWith("]")
+                .contains("\"key\"");  // JSON формат
     }
 }
