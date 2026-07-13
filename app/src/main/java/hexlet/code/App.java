@@ -48,7 +48,7 @@ public class App implements Runnable {
 
             // Генерируем diff, по умолчанию - Stylish.
             // Если добавить тип форматтера третьим параметром, то будет работать иной тип
-            String diff = Differ.generate(filepath1, filepath2, "stylish");
+            String diff = Differ.generate(filepath1, filepath2, format);
 
             // Выводим результат
             System.out.println(diff);
