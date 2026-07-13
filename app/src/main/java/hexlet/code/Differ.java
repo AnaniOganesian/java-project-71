@@ -1,7 +1,6 @@
 package hexlet.code;
 
 import static hexlet.code.BuildDiff.buildDiff;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
@@ -22,24 +21,16 @@ public class Differ {
         String contentOfFilepath1 = Files.readString(Paths.get(filePath1));
         String contentOfFilepath2 = Files.readString(Paths.get(filePath2));
 
-        if (formate1.equals("json") && formate2.equals("json")) {
-            Map<String, Object> config1 = Parser.parseJson(contentOfFilepath1);
-            Map<String, Object> config2 = Parser.parseJson(contentOfFilepath2);
-            List<DiffNode> diffNodes = buildDiff(config1, config2);
-            return Formatter.format(diffNodes, format);
-        } else if ((formate1.equals("yaml") && formate2.equals("yaml")) || (formate1.equals("yml") && formate2.equals("yml"))) {
-            Map<String, Object> config1 = Parser.parseYaml(contentOfFilepath1);
-            Map<String, Object> config2 = Parser.parseYaml(contentOfFilepath2);
-            List<DiffNode> diffNodes = buildDiff(config1, config2);
-            return Formatter.format(diffNodes, format);
-        } else {
-            return "Wrong formates";
-        }
+        Map<String, Object> config1 = Parser.parse(contentOfFilepath1, formate1);
+        Map<String, Object> config2 = Parser.parse(contentOfFilepath2, formate2);
+        List<DiffNode> diffNodes = buildDiff(config1, config2);
+        return Formatter.format(diffNodes, format);
+
     }
 
     private static String getFormat(String sourcePath)  {
 
-        return FilenameUtils.getExtension(sourcePath);
+        return FilenameUtils.getExtension(sourcePath).toLowerCase();
 
 
     }

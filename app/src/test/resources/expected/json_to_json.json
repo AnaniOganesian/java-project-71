@@ -1,0 +1,30 @@
+[
+  {
+    "key" : "host",
+    "status" : "removed",
+    "oldValue" : "hexlet.io"
+  },
+  {
+    "key" : "proxy",
+    "status" : "changed",
+    "oldValue" : false,
+    "newValue" : true
+  },
+  {
+    "key" : "setting1",
+    "status" : "unchanged",
+    "oldValue" : "value 1",
+    "newValue" : "value 1"
+  },
+  {
+    "key" : "setting2",
+    "status" : "added",
+    "newValue" : 300
+  },
+  {
+    "key" : "timeout",
+    "status" : "changed",
+    "oldValue" : 50,
+    "newValue" : 20
+  }
+]

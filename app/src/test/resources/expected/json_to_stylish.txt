@@ -1,0 +1,9 @@
+{
+  - host: hexlet.io
+  - proxy: false
+  + proxy: true
+    setting1: value 1
+  + setting2: 300
+  - timeout: 50
+  + timeout: 20
+}
