@@ -6,7 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.Map;
 import java.util.List;
-
+import org.apache.commons.io.FilenameUtils;
 
 
 public class Differ {
@@ -27,7 +27,7 @@ public class Differ {
             Map<String, Object> config2 = Parser.parseJson(contentOfFilepath2);
             List<DiffNode> diffNodes = buildDiff(config1, config2);
             return Formatter.format(diffNodes, format);
-        } else if (formate1.equals("yaml") && formate2.equals("yaml")) {
+        } else if ((formate1.equals("yaml") && formate2.equals("yaml")) || (formate1.equals("yml") && formate2.equals("yml"))) {
             Map<String, Object> config1 = Parser.parseYaml(contentOfFilepath1);
             Map<String, Object> config2 = Parser.parseYaml(contentOfFilepath2);
             List<DiffNode> diffNodes = buildDiff(config1, config2);
@@ -37,14 +37,11 @@ public class Differ {
         }
     }
 
-    private static String getFormat(String sourcePath) throws IOException {
-        if (sourcePath.endsWith(".json")) {
-            return "json";
-        } else if (sourcePath.endsWith(".yaml") || sourcePath.endsWith(".yml")) {
-            return "yaml";
-        } else {
-            throw new IOException("Unsupported source extension: " + sourcePath);
-        }
+    private static String getFormat(String sourcePath)  {
+
+        return FilenameUtils.getExtension(sourcePath);
+
+
     }
 
 }

@@ -40,6 +40,8 @@ dependencies {
     // Mockito для мокирования
     testImplementation("org.mockito:mockito-core:5.7.0")
     testImplementation("org.mockito:mockito-junit-jupiter:5.7.0")
+
+    implementation("commons-io:commons-io:2.15.1")
 }
 
 java {

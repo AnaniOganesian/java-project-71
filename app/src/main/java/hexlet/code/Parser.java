@@ -1,7 +1,11 @@
 package hexlet.code;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
+
+import java.util.List;
 import java.util.Map;
+
+import static hexlet.code.BuildDiff.buildDiff;
 
 public class Parser {
 
@@ -20,6 +24,7 @@ public class Parser {
             throw new IOException("Unknown file format: " + data);
         }
     }*/
+
 
     // Парсит JSON
     public static Map<String, Object> parseJson(String content) throws Exception {
