@@ -93,6 +93,17 @@ class DifferTest {
     }
 
     @Test
+    @DisplayName("Yaml → stylish (explicit)")
+    void testYamlToStylishExplicit() throws Exception {
+        String file1 = getFixturePath("file1Test.yml");
+        String file2 = getFixturePath("file2Test.yml");
+        String expected = getExpectedResult("yaml_to_stylish.txt");
+        String result = Differ.generate(file1, file2, "stylish");
+
+        assertThat(result).isEqualTo(expected);
+    }
+
+    @Test
     @DisplayName("YAML → plain")
     void testYamlToPlain() throws Exception {
         String file1 = getFixturePath("file1Test.yml");

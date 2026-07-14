@@ -39,7 +39,7 @@ public class PlainFormatter {
         }
 
         // Убираем последний перевод строки
-        if (result.length() > 0) {
+        if (!result.isEmpty()) {
             result.setLength(result.length() - 1);
         }
 
@@ -51,10 +51,6 @@ public class PlainFormatter {
             return "null";
         }
 
-        if (isComplexValue(value)) {
-            return "[complex value]";
-        }
-
         if (value instanceof String) {
             return "'" + value + "'";
         }
@@ -63,7 +59,11 @@ public class PlainFormatter {
             return value.toString();
         }
 
-        return "[complex value]";
+        if (isComplexValue(value)) {
+            return "[complex value]";
+        }
+
+        return String.valueOf(value);
     }
 
     private static boolean isComplexValue(Object value) {

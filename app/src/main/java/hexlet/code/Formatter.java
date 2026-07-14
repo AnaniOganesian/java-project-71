@@ -7,7 +7,7 @@ import java.util.List;
 
 public class Formatter {
 
-    public static String format(List<DiffNode> diffNodes, String formatType) {
+    public static String format(List<DiffNode> diffNodes, String formatType) throws Exception {
         switch (formatType) {
             case "plain":
                 return PlainFormatter.format(diffNodes);
