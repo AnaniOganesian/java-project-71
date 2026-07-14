@@ -16,3 +16,28 @@
 out/
 !**/src/main/**/out/
 !**/src/test/**/out/
+
+# Игнорируем файл в любой директории проекта
+access.log
+
+# Игнорируем директорию в любой директории проекта
+node_modules/
+
+# Игнорируем каталог в корне рабочей директории
+/coverage/
+
+
+/db/*.sqlite3
+
+# Игнорировать все .txt файлы в каталоге doc/ на всех уровнях вложенности
+doc/**/*.{txt,png}
+
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**/build/
+!**/src/test/**/build/
+.kotlin
+*.cast
+
+
